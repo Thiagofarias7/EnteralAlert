@@ -36,7 +36,7 @@ void calibrateSystem() {
   // Calcular valor de referência
   referenceValue = ldrValue / (float)totalSamples;
 
-  Serial.print("Calibração Completa. Valor de referêcia: ");
+  Serial.print("Calibration completed. Reference Value: ");
   Serial.println(referenceValue);
 
   // Reinicializar variáveis para próxima calibração
