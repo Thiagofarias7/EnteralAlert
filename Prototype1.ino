@@ -1,7 +1,7 @@
 const int ldrPin = 36;      // Pino do LDR
 const int buzzerPin = 13;   // Pino do Buzzer
 const int ledCalibration = 11; //Led indicador de calibração
-//-------------- Essas duas são alteradas
+//-----------------------------------------------------------
 const int calibrationTime = 10000;  // Tempo de calibração em milissegundos
 const int calibrationInterval = 1000;  // Intervalo de amostragem durante a calibração em milissegundos
 const float detectionThreshold = 0.8;  // Limite de detecção em relação ao valor de referência
@@ -18,9 +18,11 @@ void setup() {
 }
 
 void loop() {
- // Calibração automática
+// Calibração automática
   calibrateSystem();
-  // Verificar estado do sistema
+// Indica visualmente ao usuário que a calibração findou
+  calibrationCompleted()  
+// Verificar estado do sistema
   checkSystemState();
 }
 
@@ -43,16 +45,15 @@ void calibrateSystem() {
   Serial.print("Calibração Completa. Valor de referêcia: ");
   Serial.println(referenceValue);
   // Reinicializar variáveis para próxima calibração
-  digitalWrite(ledCalibration, LOW);
-  delay(500);
-  digitalWrite(ledCalibration, HIGH);
-  delay(500);
-  digitalWrite(ledCalibration, LOW);
-  delay(500);
-  digitalWrite(ledCalibration, HIGH);
-  delay(500);
-  digitalWrite(ledCalibration, LOW); //Led pisca indicando término da calibração
   ldrValue = 0;
+}
+void calibrationCompleted() {
+  for (int repetition = 0; repetition < 3; repetition++){
+  digitalWrite(ledCalibration, LOW);
+  delay(500);
+  digitalWrite(ledCalibration, HIGH);
+  delay(500);
+  }
 }
 void checkSystemState() {
     // Fazer a leitura atual do LDR
